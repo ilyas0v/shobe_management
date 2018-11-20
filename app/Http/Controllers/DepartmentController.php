@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Department;
+use Session;
 
 class DepartmentController extends Controller
 {
@@ -14,7 +15,7 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::all();
+        $departments = Department::where('deleted','=',0)->get();
       return view("admin.department.index")->withDepartments($departments);
     }
 
@@ -63,7 +64,8 @@ class DepartmentController extends Controller
      */
     public function show($id)
     {
-        //
+        $department = Department::find($id);
+        return $department;
     }
 
     /**
@@ -74,7 +76,11 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $department = Department::find($id);
+        $departments = Department::all();
+        if($department){
+            return view("admin.department.edit")->withDepartment($department)->withDepartments($departments);
+        }
     }
 
     /**
@@ -86,7 +92,22 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $department = Department::find($id);
+        $this->validate($request , [
+            "name" => "required",
+            "description" => "required|min:5|max:1000",
+            "parent_id" => "integer",
+            "status" => "integer"
+        ]);
+
+        $department->name = $request->input('name');
+        $department->description = $request->input('description');
+        $department->status = $request->input('status');
+        $department->parent_id = $request->input('parent_id');
+
+        $department->save();
+        Session::flash('success', 'Department has been successfully updated..');
+        return redirect()->route('department.index');
     }
 
     /**
@@ -97,6 +118,12 @@ class DepartmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $department = Department::find($id);
+        $department->deleted = 1;
+        $department->save();
+
+        Session::flash('success' , 'Department has been deleted');
+
+        return redirect()->route('department.index');
     }
 }

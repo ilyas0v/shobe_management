@@ -7,7 +7,7 @@
 </div>
 </div>
 
-<script src="{{asset('dist/modules/jquery.min.js')}}"></script>
+
 <script src="{{asset('dist/modules/popper.js')}}"></script>
 <script src="{{asset('dist/modules/tooltip.js')}}"></script>
 <script src="{{asset('dist/modules/bootstrap/js/bootstrap.min.js')}}"></script>
@@ -55,8 +55,8 @@
         }
     });
 </script>
-<script src="../dist/js/scripts.js"></script>
-<script src="../dist/js/custom.js"></script>
-<script src="../dist/js/demo.js"></script>
+<script src="{{asset('dist/js/scripts.js')}}"></script>
+<script src="{{asset('dist/js/custom.js')}}"></script>
+<script src="{{asset('dist/js/demo.js')}}"></script>
 </body>
 </html>

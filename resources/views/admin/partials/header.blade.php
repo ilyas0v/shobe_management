@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" name="viewport">
-    <title>Dashboard &mdash; Stisla</title>
+    <title>@yield('title')</title>
 
     <link rel="stylesheet" href="{{asset('/dist/modules/bootstrap/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('dist/modules/ionicons/css/ionicons.min.css')}}">
@@ -13,6 +13,12 @@
     <link rel="stylesheet" href="{{asset('dist/modules/flag-icon-css/css/flag-icon.min.css')}}">
     <link rel="stylesheet" href="{{asset('dist/css/demo.css')}}">
     <link rel="stylesheet" href="{{asset('dist/css/style.css')}}">
+    <script src="{{asset('dist/modules/jquery.min.js')}}"></script>
+    <style>
+        .error{
+            color:red;
+        }
+    </style>
 </head>
 
 <body>

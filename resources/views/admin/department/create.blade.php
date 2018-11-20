@@ -1,5 +1,5 @@
 @extends("admin.layout")
-
+@section('title','Add new department')
 @section("content")
     <div class="main-content" style="min-height: 282px;">
         <section class="section">
@@ -8,8 +8,8 @@
                 @csrf
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
-                        <input placeholder="Name" type="text" name="name" class="form-control">
-                        <textarea placeholder="Description" name="description" class="form-control" id="" cols="30" rows="10"></textarea>
+                        <input placeholder="Name" type="text" value="{{old("name")}}" name="name" class="form-control">
+                        <textarea placeholder="Description" name="description" class="form-control" id="" cols="30" rows="10">{{old('description')}}</textarea>
                         <select class="form-control" name="parent_id" id="">
                             <option value="0">Select parent department</option>
                             @foreach($departments as $department)
