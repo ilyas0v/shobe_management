@@ -1,7 +1,7 @@
 <div class="main-sidebar" tabindex="1" style="overflow: hidden; outline: none;">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="index.html">Department management</a>
+            <a href="index.html">Management</a>
         </div>
         <div class="sidebar-user">
             <div class="sidebar-user-picture">
@@ -34,6 +34,14 @@
                 <ul class="menu-dropdown">
                     <li><a href="{{route('employee.index')}}"><i class="ion ion-ios-circle-outline"></i> All employee</a></li>
                     <li><a href="{{route('employee.create')}}"><i class="ion ion-ios-circle-outline"></i> Add employee</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#" class="has-dropdown"><i class="ion ion-ios-albums-outline"></i><span>Rooms</span></a>
+                <ul class="menu-dropdown">
+                    <li><a href="{{route('room.index')}}"><i class="ion ion-ios-circle-outline"></i> All rooms</a></li>
+                    <li><a href="{{route('room.create')}}"><i class="ion ion-ios-circle-outline"></i> Add room</a></li>
                 </ul>
             </li>
         </ul>

@@ -30,4 +30,6 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"] , function(){
 
     Route::resource('department','DepartmentController');
     Route::resource('employee','EmployeeController');
+    Route::resource('room','RoomController');
+    Route::resource('campus','CampusController');
 });

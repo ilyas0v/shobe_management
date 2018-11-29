@@ -16,7 +16,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::all();
+        $employees = Employee::where('deleted',0)->get();
         return view('admin.employee.index')->withEmployees($employees);
     }
 
@@ -57,7 +57,7 @@ class EmployeeController extends Controller
         $employee->date_of_birth = $request->date_of_birth;
         $employee->department_id = $request->department_id;
         $employee->status = $request->status;
-
+        $employee->phone = $request->phone;
         $employee->save();
 
         Session::flash('success' , 'Employee has been added.');
@@ -73,7 +73,8 @@ class EmployeeController extends Controller
      */
     public function show($id)
     {
-        //
+        $employee = Employee::find($id);
+        return view('admin.employee.details')->withEmployee($employee);
     }
 
     /**
@@ -84,7 +85,9 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $employee = Employee::find($id);
+        $departments = Department::where('deleted',0)->get();
+        return view('admin.employee.edit')->withEmployee($employee)->withDepartments($departments);
     }
 
     /**
@@ -96,7 +99,30 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'name' => 'required|string|max:100',
+            'surname' => 'required|string|max:100',
+            'email' => 'email|max:100',
+            'address' => 'string',
+            'date_of_birth' => 'date',
+            'department_id' => 'integer',
+            'status' => 'integer'
+        ]);
+
+        $employee = Employee::find($id);
+        $employee->name = $request->input('name');
+        $employee->surname = $request->input('surname');
+        $employee->email = $request->input('email');
+        $employee->address = $request->input('address');
+        $employee->date_of_birth = $request->input('date_of_birth');
+        $employee->department_id = $request->input('department_id');
+        $employee->status = $request->input('status');
+        $employee->phone = $request->input('phone');
+        $employee->save();
+
+        Session::flash('success' , 'Employee has been updated.');
+
+        return redirect()->route('employee.index');
     }
 
     /**
@@ -107,6 +133,12 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $emp = Employee::find($id);
+        $emp->deleted = 1;
+        $emp->save();
+
+        Session::flash('success' , 'Employee has been deleted');
+
+        return redirect()->route('employee.index');
     }
 }

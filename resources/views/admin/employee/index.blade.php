@@ -32,12 +32,12 @@
                         @endif
                     </td>
                     <td>
-                        <a href="#" class="btn btn-action btn-secondary get-detail" data-id="{{$employee->id}}">Detail</a>
+                        <a href="{{route('employee.show' , $employee->id)}}" class="btn btn-action btn-secondary get-detail" data-id="{{$employee->id}}">Detail</a>
                         <a href="{{route('employee.edit',$employee->id)}}" class="btn btn-action btn-warning">Edit</a>
-                        <form style="display: inline" action="{{route('employee.destroy',$employee->id)}}" method="POST">
+                        <a class="btn btn-action btn-danger" href="#" onclick="if(confirm('Are you sure to delete {{$employee->name}} ?')){$('#deleteform').submit()}">Delete</a>
+                        <form id="deleteform" style="display: inline" action="{{route('employee.destroy',$employee->id)}}" method="POST">
                             @csrf
                             <input type="hidden" name="_method" value="delete" />
-                            <button type="submit" class="btn btn-action btn-danger">Delete</button>
                         </form>
                     </td>
                 </tr>

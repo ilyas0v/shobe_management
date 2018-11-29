@@ -44,7 +44,7 @@
                         <input placeholder="Email" type="email" value="{{old("email")}}" name="email" class="form-control">
                         <input placeholder="Phone" type="text" value="{{old("phone")}}" name="phone" class="form-control">
                         <input placeholder="Address" type="text" value="{{old("address")}}" name="address" class="form-control">
-                        <input placeholder="Date of birth" type="date" value="{{old("date_of_birth")}}" name="date" class="form-control">
+                        <input placeholder="Date of birth" type="date" value="{{old("date_of_birth")}}" name="date_of_birth" class="form-control">
                         <select class="form-control" name="department_id" id="">
                             <option value="0">Select department</option>
                             @foreach($departments as $department)
