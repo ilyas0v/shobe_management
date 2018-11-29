@@ -32,4 +32,6 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"] , function(){
     Route::resource('employee','EmployeeController');
     Route::resource('room','RoomController');
     Route::resource('campus','CampusController');
+
+    Route::get('image/delete/{id}' , 'RoomImageController@destroy')->name('image.delete');
 });

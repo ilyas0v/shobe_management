@@ -2,21 +2,8 @@
 <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Department name</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
             <div class="modal-body">
-                <table class="table table-striped">
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                    </tr>
-                </table>
-                <h2>Description</h2>
-                <p id="department-description">sndh dsuhdsfu dsuhfuh dfuhsdf</p>
+                <img src="" alt="">
             </div>
         </div>
     </div>

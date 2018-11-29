@@ -14,5 +14,9 @@ class Room extends Model
         return $this->belongsTo('App\Campus' , 'campus_id');
     }
 
+    public function images(){
+        return $this->hasMany('App\RoomImage','room_id');
+    }
+
     protected $fillable = ['name' , 'department_id' , 'campus_id' , 'phone' , 'type' , 'status' , 'number_of_seats'];
 }

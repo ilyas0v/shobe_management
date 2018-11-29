@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Campus;
 use App\Department;
 use App\Room;
+use App\RoomImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Image;
 
 class RoomController extends Controller
 {
@@ -53,7 +55,7 @@ class RoomController extends Controller
             'number_of_seats' => 'required'
         ]);
 
-        Room::create([
+        $room = Room::create([
             'name' => $request->name,
             'type' => $request->type,
             'phone' => $request->phone,
@@ -62,6 +64,22 @@ class RoomController extends Controller
             'department_id' => $request->department_id,
             'status' => $request->status
         ]);
+
+        if($request->hasFile('images')){
+            $images = $request->file('images');
+            foreach($images as $image) {
+                $filename = rand(1111, 9999) . time() . '.' . $image->getClientOriginalExtension();
+                $location = 'room_images/originals/'.$filename;
+                $location_thumb = 'room_images/thumbnails/'.$filename;
+                Image::make($image)->save($location);
+                Image::make($image)->resize(300,300)->save($location_thumb);
+                $img_obj = new RoomImage();
+                $img_obj->url = $location;
+                $img_obj->room_id = $room->id;
+                $img_obj->thumb_url = $location_thumb;
+                $img_obj->save();
+            }
+        }
 
         Session::flash('success' , 'Room has been added');
 
@@ -76,7 +94,8 @@ class RoomController extends Controller
      */
     public function show($id)
     {
-        //
+        $room = Room::find($id);
+        return view('admin.room.details')->withRoom($room);
     }
 
     /**
@@ -87,7 +106,10 @@ class RoomController extends Controller
      */
     public function edit($id)
     {
-        //
+        $room = Room::find($id);
+        $departments = Department::where('deleted',0)->get();
+        $campuses = Campus::all();
+        return view('admin.room.edit')->withRoom($room)->withDepartments($departments)->withCampuses($campuses);
     }
 
     /**
@@ -99,7 +121,30 @@ class RoomController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request , [
+            'name' => 'string|required|max:50',
+            'type' => 'string|required|max:50',
+            'phone' => 'string',
+            'campus_id' => 'required|integer',
+            'department_id' => 'required|integer',
+            'status' => 'integer',
+            'number_of_seats' => 'required'
+        ]);
+
+        $room = Room::find($id);
+        $room->name = $request->input('name');
+        $room->type = $request->input('type');
+        $room->phone = $request->input('phone');
+        $room->campus_id = $request->input('campus_id');
+        $room->department_id = $request->input('department_id');
+        $room->status = $request->input('status');
+        $room->number_of_seats = $request->input('number_of_seats');
+
+        $room->save();
+
+        Session::flash('success', 'Room has been updated..');
+
+        return redirect()->route('room.index');
     }
 
     /**
@@ -110,6 +155,12 @@ class RoomController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $room = Room::find($id);
+        $room->deleted = 1;
+        $room->save();
+
+        Session::flash('success' , 'Room has been deleted.');
+        
+        return redirect()->route('room.index');
     }
 }

@@ -9,7 +9,7 @@
                     <li>{{$error}}</li>
                 @endforeach
             </ul>
-            <form action="{{route('room.store')}}" method="POST">
+            <form action="{{route('room.store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
@@ -39,6 +39,11 @@
                             <option value="1">Active</option>
                             <option value="0">Passive</option>
                         </select>
+                        <label>
+                            <p class="btn btn-outline-success mb-1 mt-2">Select images</p>
+                            <input style="display: none;" type="file" class="form-control" name="images[]" multiple placeholder="Choose images">
+                        </label>
+                        
                     </div>
                 </div>
                 <input type="submit" class="btn btn-success" value="Save">
