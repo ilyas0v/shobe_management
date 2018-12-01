@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\RoomImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class RoomImageController extends Controller
 {
@@ -11,8 +12,8 @@ class RoomImageController extends Controller
         $image = RoomImage::find($id);
         $oi  = $image->url;
         $ti  = $image->thumb_url;
-//        unlink(asset($oi));
-//        unlink(asset($ti));
+        File::delete($oi);
+        File::delete($ti);
         $image->delete();
         return 'ok';
     }

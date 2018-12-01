@@ -21,7 +21,7 @@ class RoomController extends Controller
     {
         $departments = Department::where('deleted',0)->get();
         $campuses = Campus::all();
-        $rooms = Room::where('deleted',0)->get();
+        $rooms = Room::where('deleted',0)->orderBy('id','DESC')->get();
         return view('admin.room.index')->withRooms($rooms)->withDepartments($departments)->withCampuses($campuses);
     }
 
@@ -141,6 +141,22 @@ class RoomController extends Controller
         $room->number_of_seats = $request->input('number_of_seats');
 
         $room->save();
+
+        if($request->hasFile('images')){
+            $images = $request->file('images');
+            foreach($images as $image) {
+                $filename = rand(1111, 9999) . time() . '.' . $image->getClientOriginalExtension();
+                $location = 'room_images/originals/'.$filename;
+                $location_thumb = 'room_images/thumbnails/'.$filename;
+                Image::make($image)->save($location);
+                Image::make($image)->resize(300,300)->save($location_thumb);
+                $img_obj = new RoomImage();
+                $img_obj->url = $location;
+                $img_obj->room_id = $room->id;
+                $img_obj->thumb_url = $location_thumb;
+                $img_obj->save();
+            }
+        }
 
         Session::flash('success', 'Room has been updated..');
 
