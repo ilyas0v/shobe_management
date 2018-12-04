@@ -44,6 +44,14 @@
                     <li><a href="{{route('room.create')}}"><i class="ion ion-ios-circle-outline"></i> Add room</a></li>
                 </ul>
             </li>
+
+            <li>
+                <a href="#" class="has-dropdown"><i class="ion ion-ios-albums-outline"></i><span>Equipment</span></a>
+                <ul class="menu-dropdown">
+                    <li><a href="{{route('equipment.index')}}"><i class="ion ion-ios-circle-outline"></i> All equipment</a></li>
+                    <li><a href="{{route('equipment.create')}}"><i class="ion ion-ios-circle-outline"></i> Add equipment</a></li>
+                </ul>
+            </li>
         </ul>
     </aside>
 </div>

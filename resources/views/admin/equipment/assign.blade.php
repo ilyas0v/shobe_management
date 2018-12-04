@@ -3,9 +3,11 @@
 @section("content")
     <div class="main-content" style="min-height: 282px;">
         <section class="section">
-            <h1 class="section-header">Assign equipment to employees</h1>
+            <h1 class="section-header">Assign {{$equipment->name}}</h1>
             @include('admin.partials.messages')
-            <a href="{{route('equipment.assign')}}" class="btn btn-success">Add new equipment</a>
+            @foreach($errors->all() as $e)
+                <p class="alert alert-danger">{{$e}}</p>
+            @endforeach
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <tbody>
@@ -13,37 +15,38 @@
                         <th>#</th>
                         <th>Name</th>
                         <th>Model</th>
-                        <th>Status</th>
-                        <th></th>
+                        <th>Serial</th>
                     </tr>
-                    @foreach($equipments as $equipment)
-                        <tr>
-                            <td>{{$equipment->id}}</td>
-                            <td>{{$equipment->name}}</td>
-                            <td>{{$equipment->model}}</td>
-                            <td>
-                                @if($equipment->status == 1)
-                                    <div class="badge badge-success">Active</div>
-                                @elseif($equipment->status == 2)
-                                    <div class="badge badge-warning">Malfunctioning</div>
-                                @else
-                                    <div class="badge badge-danger">Passive</div>
-                                @endif
-                            </td>
-                            <td>
-                                <a href="{{route('equipment.show', $equipment->id)}}" class="btn btn-action btn-secondary get-detail" data-id="{{$equipment->id}}">Detail</a>
-                                <a href="{{route('equipment.edit',$equipment->id)}}" class="btn btn-action btn-warning">Edit</a>
-                                <a  class="btn btn-danger btn-action" onclick="if(confirm('are u sure?')){$('#deleteform').submit()}" href="#">Delete</a>
-                                <form id="deleteform" style="display: inline" action="{{route('equipment.destroy',$equipment->id)}}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="_method" value="delete" />
-                                </form>
-                                <a href="#"></a>
-                            </td>
-                        </tr>
-                    @endforeach
+                    <tr>
+                        <td>{{$equipment->id}}</td>
+                        <td>{{$equipment->name}}</td>
+                        <td>{{$equipment->model}}</td>
+                        <td>{{$equipment->serial}}</td>
+                    </tr>
                     </tbody>
                 </table>
+
+                <form action="{{route('equipment.assign_update',$equipment->id)}}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row">
+                        <div class="col col-md-9">
+                            <input name="employee" id="employee" value="{{$equipment->employee->id."@".$equipment->employee->name." ".$equipment->employee->surname}}" type="text" list="employees" class="form-control" placeholder="Assign to:">
+                            <datalist id="employees">
+                                @foreach($employees as $employee)
+                                    <option value="{{$employee->id . "@" .$employee->name. " " . $employee->surname}}">
+                                @endforeach
+                            </datalist>
+                            <input type="text" placeholder="Act no" class="form-control" name="act_no">
+                            <input type="date" placeholder="Date" class="form-control" name="date">
+                            <input type="file" name="file[]" class="form-control">
+                        </div>
+                        <div class="col col-md-3">
+                            <input type="submit" class="btn btn-primary" value="Assign">
+                            <a onclick="$('#employee').val('');$('#employee').focus()" class="btn btn-danger" href="#" >Clear</a>
+
+                        </div>
+                    </div>
+                </form>
             </div>
         </section>
     </div>

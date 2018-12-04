@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Act;
+use App\Employee;
 use App\Equipment;
 use App\EquipmentCategory;
+use Symfony\Component\Console\Input\Input;
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -114,11 +118,52 @@ class EquipmentController extends Controller
     }
 
     public function assign_form($id){
-        return "Hello $id";
+        $equipment = Equipment::find($id);
+        $employees = Employee::where('deleted',0)->get();
+        return view('admin.equipment.assign',compact('equipment'),compact('employees'));
     }
 
     public function assign(Request $request, $id){
-        //
+        try{
+           $employee = $request->employee;
+           $emp_id = explode('@',$employee)[0];
+           $data = ['emp_id' => $emp_id , 'act_no' => $request->act_no , 'file' => $request->file,'date'=>$request->date];
+            $validator = Validator::make($data, [
+                'emp_id' => 'integer|exists:employees,id',
+                //'file' => 'max:10000|mimes:jpg,pdf,doc,docx',
+                'date' => 'date',
+                'act_no' => 'max:100'
+            ]);
+
+            if($validator->fails()){
+                return back()->withErrors($validator);
+            }
+
+            $act = new Act();
+            $act->employee_id = $emp_id;
+            $act->equipment_id = $id;
+            $act->date = $data['date'];
+            $act->act_no = $data['act_no'];
+
+            if (Input::hasFile('file')) {
+                $name = time() . '.' . Input::file('file')->clientExtension();
+                if (Input::file('file')->move('act_files/'.$name)) {
+                    $act->file = $name;
+                } else {
+                   $act->file = '';
+                }
+
+            }
+
+            $act->save();
+
+            Session::flash('success' , 'You assigned equipment succesfully..');
+
+            return redirect()->route('equipment.index'  );
+
+        }catch(Exception $e){
+            return back();
+        }
     }
 
 

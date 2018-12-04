@@ -14,4 +14,8 @@ class Equipment extends Model
         return $this->belongsTo('App\Employee' , 'given_to');
     }
 
+    public function acts(){
+        return $this->hasMany('App\Act','employee_id');
+    }
+
 }
