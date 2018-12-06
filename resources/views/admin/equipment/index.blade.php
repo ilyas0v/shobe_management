@@ -13,7 +13,7 @@
                     <th>#</th>
                     <th>Name</th>
                     <th>Model</th>
-                    <th>Owner</th>
+                    <th>Holder</th>
                     <th>Status</th>
                     <th></th>
                 </tr>
@@ -22,7 +22,7 @@
                     <td>{{$equipment->id}}</td>
                     <td>{{$equipment->name}}</td>
                     <td>{{$equipment->model}}</td>
-                    <td>{{$equipment->employee->name . " " . $equipment->employee->surname}}</td>
+                    <td>{{ count($equipment->acts) > 0 ? $equipment->acts->last()->employee->name : ''}}</td>
                     <td>
                         @if($equipment->status == 1)
                         <div class="badge badge-success">Active</div>

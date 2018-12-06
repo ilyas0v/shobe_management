@@ -4,21 +4,40 @@
     @include('admin.partials.image')
     <div class="main-content" style="min-height: 282px;">
         <section class="section">
-            <h1 class="section-header">{{$room->name}}</h1>
-            @foreach($room->images as $image)
-                <img class="images" src="{{asset($image->thumb_url)}}" width="300">
-            @endforeach
+            <h1 class="section-header">{{$equipment->name}}</h1>
+            <h2>Acts for {{$equipment->name}}</h2>
+            <div class="table-respnsive">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>#</th>
+                        <th>Act no</th>
+                        <th>Employee name</th>
+                        <th>Date</th>
+                        <th>File</th>
+                    </tr>
+                    @foreach($equipment->acts as $act)
+                        <tr>
+                            <td>{{$act->id}}</td>
+                            <td>{{$act->act_no}}</td>
+                            <td>{{$act->employee->name . " " . $act->employee->surname}}</td>
+                            <td>{{$act->date}}</td>
+                            <td>
+                            @if($act->file !== "")
+                                <a class="badge badge-success" href="{{asset($act->file)}}" target="_blank">File</a></td>
+                            @else
+                                <p class="badge badge-danger">No file</p>
+                            @endif
+                            </td>
+
+                            <td>
+                                <a href="{{route('act.edit',$act->id)}}" class="btn btn-warning btn-action">Edit</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
         </section>
     </div>
-
-    <script>
-        $('.images').on('click' , function(){
-            var url = $(this).attr('src');
-            url = url.replace('thumbnails' , 'originals');
-            $("#img_of_modal").attr('src' , url);
-            $('#imageModal').modal('show');
-        });
-    </script>
 @endsection
 
 

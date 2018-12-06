@@ -52,6 +52,10 @@
                     <li><a href="{{route('equipment.create')}}"><i class="ion ion-ios-circle-outline"></i> Add equipment</a></li>
                 </ul>
             </li>
+
+            <li>
+                <a href="{{route('act.index')}}"><i class="ion ion-ios-albums-outline"></i><span>Acts</span></a>
+            </li>
         </ul>
     </aside>
 </div>

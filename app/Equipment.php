@@ -15,7 +15,7 @@ class Equipment extends Model
     }
 
     public function acts(){
-        return $this->hasMany('App\Act','employee_id');
+        return $this->hasMany('App\Act','equipment_id');
     }
 
 }

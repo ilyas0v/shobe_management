@@ -6,6 +6,7 @@ use App\Act;
 use App\Employee;
 use App\Equipment;
 use App\EquipmentCategory;
+use Illuminate\Support\Facades\File;
 use Symfony\Component\Console\Input\Input;
 use Validator;
 use Illuminate\Http\Request;
@@ -80,7 +81,8 @@ class EquipmentController extends Controller
      */
     public function show($id)
     {
-        //
+        $equipment = Equipment::find($id);
+        return view('admin.equipment.details',compact('equipment'));
     }
 
     /**
@@ -145,14 +147,14 @@ class EquipmentController extends Controller
             $act->date = $data['date'];
             $act->act_no = $data['act_no'];
 
-            if (Input::hasFile('file')) {
-                $name = time() . '.' . Input::file('file')->clientExtension();
-                if (Input::file('file')->move('act_files/'.$name)) {
-                    $act->file = $name;
-                } else {
-                   $act->file = '';
-                }
-
+            if($request->hasFile('file')){
+                $file = $request->file('file')[0];
+                $destinationPath = 'act_files';
+                $file_name = time().".".$file->getClientOriginalExtension();
+                $file->move($destinationPath,$file_name);
+                $act->file = $destinationPath."/".$file_name;
+            }else{
+                $act->file = "";
             }
 
             $act->save();
