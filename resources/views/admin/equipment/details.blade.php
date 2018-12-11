@@ -34,8 +34,16 @@
                             </td>
                         </tr>
                     @endforeach
+
                 </table>
             </div>
+
+            <h3>Features</h3>
+            <ul>
+                @foreach($equipment->features as $feature)
+                    <li>{{$feature->key}} : {{$feature->value}}</li>
+                @endforeach
+            </ul>
         </section>
     </div>
 @endsection

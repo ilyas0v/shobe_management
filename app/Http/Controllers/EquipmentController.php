@@ -6,6 +6,7 @@ use App\Act;
 use App\Employee;
 use App\Equipment;
 use App\EquipmentCategory;
+use App\Feature;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Console\Input\Input;
 use Validator;
@@ -51,9 +52,9 @@ class EquipmentController extends Controller
             'inventory_no' => 'string|max:100|unique:equipment',
             'purchase_date' => 'date',
             'category' => 'integer|exists:equipment_categories,id',
-            'status' => 'integer'
+            'status' => 'integer',
+            'equipment_type' => 'integer'
         ]);
-
 
         $eq = new Equipment();
         $eq->name = $request->name;
@@ -65,6 +66,18 @@ class EquipmentController extends Controller
         $eq->status = $request->status;
 
         $eq->save();
+
+        $keys = $request->feature_name;
+        $values = $request->feature_value;
+
+        for($i=0;$i<count($keys);$i++){
+            $f = new Feature();
+            $f->key = $keys[$i];
+            $f->value = $values[$i];
+            $f->equipment_id = $eq->id;
+            $f->save();
+        }
+
 
         Session::flash('success' , 'Equipment has been added.');
 

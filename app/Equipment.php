@@ -18,4 +18,8 @@ class Equipment extends Model
         return $this->hasMany('App\Act','equipment_id');
     }
 
+    public function features(){
+        return $this->hasMany('App\Feature','equipment_id');
+    }
+
 }

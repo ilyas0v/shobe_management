@@ -3,7 +3,7 @@
 @section("content")
     <div class="main-content" style="min-height: 282px;">
         <section class="section">
-            <h1>Hello world</h1>
+            <h1>Add default features when selecting type of equipment</h1>
         </section>
     </div>
 @endsection
