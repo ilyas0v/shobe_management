@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Equipment extends Model
 {
-    public function category(){
+    public function kategory(){
         return $this->belongsTo('App\EquipmentCategory' , 'category');
     }
 
@@ -20,6 +20,10 @@ class Equipment extends Model
 
     public function features(){
         return $this->hasMany('App\Feature','equipment_id');
+    }
+
+    public function room(){
+        return $this->belongsTo('App\Room' , 'room_id');
     }
 
 }

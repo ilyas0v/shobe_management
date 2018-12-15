@@ -21,6 +21,11 @@
             </li>
 
             <li class="menu-header">Components</li>
+
+            <li>
+                <a href="{{route('reports.index')}}"><i class="ion ion-ios-albums-outline"></i><span>Reports</span></a>
+            </li>
+
             <li>
                 <a href="#" class="has-dropdown"><i class="ion ion-ios-albums-outline"></i><span>Department</span></a>
                 <ul class="menu-dropdown">

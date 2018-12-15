@@ -37,4 +37,8 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"] , function(){
     Route::get('equipment/{id}/assign' , 'EquipmentController@assign_form')->name('equipment.assign');
     Route::post('equipment/{id}/assign' , 'EquipmentController@assign')->name('equipment.assign_update');
     Route::get('image/delete/{id}' , 'RoomImageController@destroy')->name('image.delete');
+
+    Route::get('equipment/get-feature-fields/{id}' , 'EquipmentController@getFeatureFields');
+
+    Route::get('reports/' , 'ReportController@index')->name('reports.index');
 });

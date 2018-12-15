@@ -36,10 +36,10 @@
                         <a href="{{route('equipment.assign',$equipment->id)}}" class="btn btn-primary btn-action">Assign</a>
                         <a href="{{route('equipment.show', $equipment->id)}}" class="btn btn-action btn-secondary get-detail" data-id="{{$equipment->id}}">Detail</a>
                         <a href="{{route('equipment.edit',$equipment->id)}}" class="btn btn-action btn-warning">Edit</a>
-                        <a  class="btn btn-danger btn-action" onclick="if(confirm('are u sure?')){$('#deleteform').submit()}" href="#">Delete</a>
-                        <form id="deleteform" style="display: inline" action="{{route('equipment.destroy',$equipment->id)}}" method="POST">
+                        <a  class="btn btn-danger btn-action" onclick="if(confirm('are u sure?')){$('#deleteform_{{$equipment->id}}').submit()}" href="#">Delete</a>
+                        <form id="deleteform_{{$equipment->id}}" style="display: inline" action="{{route('equipment.destroy',$equipment->id)}}" method="POST">
                             @csrf
-                            <input type="hidden" name="_method" value="delete" />
+                            @method('delete')
                         </form>
                         <a href="#"></a>
                     </td>
