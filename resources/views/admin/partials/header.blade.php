@@ -37,6 +37,22 @@
                 </div>
             </form>
             <ul class="navbar-nav navbar-right">
+                {{-- localization--}}
+
+                <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg">
+                        <i class="ion ion-android-person d-lg-none"></i>
+                        <div class="d-sm-none d-lg-inline-block">{{ Config::get('app.locale') }}</div></a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a href="{{route('lang.az')}}" class="dropdown-item has-icon">
+                            Azerbaycan dili
+                        </a>
+                        <a href="{{route('lang.en')}}" class="dropdown-item has-icon">
+                            English
+                        </a>
+                    </div>
+                </li>
+
+                {{--end localization--}}
                 <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="ion ion-ios-bell-outline"></i></a>
                     <div class="dropdown-menu dropdown-list dropdown-menu-right">
                         <div class="dropdown-header">Notifications
@@ -83,6 +99,7 @@
                         </div>
                     </div>
                 </li>
+
                 <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg">
                         <i class="ion ion-android-person d-lg-none"></i>
                         <div class="d-sm-none d-lg-inline-block">Hi, {{Auth::user()->name}}</div></a>

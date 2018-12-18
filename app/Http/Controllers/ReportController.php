@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Equipment;
 use App\EquipmentCategory;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -16,13 +17,34 @@ class ReportController extends Controller
     public function index()
     {
         $equipment_categories = EquipmentCategory::all();
+        $array = [];
         foreach($equipment_categories as $ec){
-            $eq = Equipment::where('room_id' , '<>' , null)->get();
-            echo $ec->name . " " .count($ec->equiptments) . '<br>';
-            echo "Sinifde olanlar : " . count($eq);
-            echo "Ishcilerde olanlar : " . count($ec->equiptments) - count($eq);
+            $array[$ec->name] = [];
+            $equipments = Equipment::where('category',$ec->id)->get();
+            foreach($equipments as $equipment){
+                $array[$ec->name][] = $equipment;
+            }
         }
+
+        return view('admin.report.index',compact('array'));
     }
+
+
+    public function download(){
+        $equipment_categories = EquipmentCategory::all();
+        $array = [];
+        foreach($equipment_categories as $ec){
+            $array[$ec->name] = [];
+            $equipments = Equipment::where('category',$ec->id)->get();
+            foreach($equipments as $equipment){
+                $array[$ec->name][] = $equipment;
+            }
+        }
+        $data = ['array' => $array];
+        $pdf = PDF::loadView('admin.pdf.report', $data);
+        return $pdf->download('reports.pdf');
+    }
+
 
     /**
      * Show the form for creating a new resource.

@@ -41,4 +41,16 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"] , function(){
     Route::get('equipment/get-feature-fields/{id}' , 'EquipmentController@getFeatureFields');
 
     Route::get('reports/' , 'ReportController@index')->name('reports.index');
+    Route::get('reports/download' , 'ReportController@download')->name('reports.download');
+
+    Route::get('lang/az' , function(){
+        \App::setLocale('az');
+        return back();
+    })->name('lang.az');
+
+    Route::get('lang/en' , function(){
+        \App::setLocale('en');
+        return back();
+    })->name('lang.en');
+
 });
