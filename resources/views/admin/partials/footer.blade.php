@@ -7,6 +7,10 @@
 </div>
 </div>
 
+<script>
+    $(".multi_select_box").select2();
+</script>
+
 
 <script src="{{asset('dist/modules/popper.js')}}"></script>
 <script src="{{asset('dist/modules/tooltip.js')}}"></script>

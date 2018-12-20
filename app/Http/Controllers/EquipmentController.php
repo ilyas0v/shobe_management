@@ -207,6 +207,7 @@ class EquipmentController extends Controller
     {
         $equipment = Equipment::find($id);
         $equipment->features()->delete();
+        $equipment->acts()->delete();
         $equipment->delete();
 
         Session::flash('success' , 'Equipment has been deleted');

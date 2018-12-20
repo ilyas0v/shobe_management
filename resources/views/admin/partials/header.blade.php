@@ -13,7 +13,12 @@
     <link rel="stylesheet" href="{{asset('dist/modules/flag-icon-css/css/flag-icon.min.css')}}">
     <link rel="stylesheet" href="{{asset('dist/css/demo.css')}}">
     <link rel="stylesheet" href="{{asset('dist/css/style.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.2/select2.css">
     <script src="{{asset('dist/modules/jquery.min.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.2/select2.min.js"></script>
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+    <script>tinymce.init({ selector:'.description' });</script>
+
     <style>
         .error{
             color:red;
@@ -41,7 +46,7 @@
 
                 <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg">
                         <i class="ion ion-android-person d-lg-none"></i>
-                        <div class="d-sm-none d-lg-inline-block">{{ Config::get('app.locale') }}</div></a>
+                        <div class="d-sm-none d-lg-inline-block">{{Session::get('locale')}}</div></a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <a href="{{route('lang.az')}}" class="dropdown-item has-icon">
                             Azerbaycan dili

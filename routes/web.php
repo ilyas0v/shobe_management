@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use Illuminate\Support\Facades\Session;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,7 +24,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(["prefix"=>"admin","middleware"=>"auth"] , function(){
+Route::group(["prefix"=>"admin","middleware"=>["auth","language"]] , function(){
+
+    $locale = Session::get('locale');
+    \App::setLocale($locale);
+
     Route::get('/', function(){
        return view("admin.index");
     })->name('admin.main');
@@ -34,6 +39,8 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"] , function(){
     Route::resource('campus','CampusController');
     Route::resource('equipment','EquipmentController');
     Route::resource('act','ActController');
+    Route::resource('task' , 'TaskController');
+
     Route::get('equipment/{id}/assign' , 'EquipmentController@assign_form')->name('equipment.assign');
     Route::post('equipment/{id}/assign' , 'EquipmentController@assign')->name('equipment.assign_update');
     Route::get('image/delete/{id}' , 'RoomImageController@destroy')->name('image.delete');
@@ -44,13 +51,19 @@ Route::group(["prefix"=>"admin","middleware"=>"auth"] , function(){
     Route::get('reports/download' , 'ReportController@download')->name('reports.download');
 
     Route::get('lang/az' , function(){
-        \App::setLocale('az');
+        Session::put('locale','az');
         return back();
     })->name('lang.az');
 
     Route::get('lang/en' , function(){
-        \App::setLocale('en');
+        Session::put('locale' , 'en');
         return back();
     })->name('lang.en');
+
+    Route::get('test' , function(){
+       $locale = Session::get('locale');
+       \App::setLocale($locale);
+       return __('content.hello');
+    });
 
 });

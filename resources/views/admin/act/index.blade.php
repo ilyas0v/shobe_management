@@ -21,7 +21,7 @@
                             <td>{{$act->id}}</td>
                             <td>{{$act->act_no}}</td>
                             <td>{{$act->employee->name . " " . $act->employee->surname}}</td>
-                            <td><a href="{{route('equipment.show',$act->equipment->id)}}" target="_blank">{{$act->equipment->name}}</a></td>
+                            <td><a href="{{route('equipment.show',$act->equipment->id ?? 0)}}" target="_blank">{{$act->equipment->name ?? 'ABC'}}</a></td>
                             <td>{{$act->date}}</td>
                             <td>
                                 @if($act->file !== "")
