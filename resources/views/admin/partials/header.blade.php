@@ -16,8 +16,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.2/select2.css">
     <script src="{{asset('dist/modules/jquery.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.2/select2.min.js"></script>
-    <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
-    <script>tinymce.init({ selector:'.description' });</script>
+    {{--<script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>--}}
+    {{--<script>tinymce.init({ selector:'.description' });</script>--}}
 
     <style>
         .error{

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Employee;
 use App\TaskAssignment;
+use Illuminate\Support\Facades\Session;
 use Validator;
+use Mail;
 use Illuminate\Http\Request;
 use App\Task;
 
@@ -17,7 +19,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        $tasks = Task::paginate(10);
+        return view('admin.task.index',compact('tasks'));
     }
 
     /**
@@ -69,6 +72,22 @@ class TaskController extends Controller
             $ta->user_id = $user_id;
             $ta->save();
         }
+
+        $assignments = $task->assignments;
+        foreach($assignments as $assignment){
+
+            $user = $assignment->user;
+            $data = ['task' => $task,  'user' => $user];
+            Mail::send('admin.task.mail', $data, function($message) use( &$task,&$user) {
+                $message->to($user->email, 'Test')->subject
+                ($task->title);
+                $message->from('xyz@gmail.com','Shobe management system');
+            });
+        }
+
+        Session::flash('success' , 'Task has been created and assigned to users');
+
+        return redirect()->route('task.index');
     }
 
     /**
